@@ -1,3 +1,9 @@
+FROM golang AS build-env
+
+ADD selectelupload /go/src/github.com/djbelyak/selectelupload
+
+RUN GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o /go/bin/selectelupload github.com/djbelyak/selectelupload
+
 FROM alpine:3.4
 MAINTAINER Ivan Belyavtsev <djbelyak@gmail.com>
 
@@ -14,8 +20,8 @@ ADD https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/${HUGO_B
 RUN ln -s /usr/local/hugo/hugo /usr/local/bin/hugo 
 
 #Install supload
-ADD https://raw.github.com/selectel/supload/master/supload.sh /usr/local/bin/supload.sh
-RUN chmod +x /usr/local/bin/supload.sh
+COPY --from=build-env /go/bin/selectelupload /usr/local/bin/
+RUN chmod +x /usr/local/bin/selectelupload
 
 WORKDIR /data
 

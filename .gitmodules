@@ -1,0 +1,3 @@
+[submodule "selectelupload"]
+	path = selectelupload
+	url = https://github.com/djbelyak/selectelupload.git
