@@ -16,7 +16,7 @@ COPY --from=build-env /go/bin/selectelupload /usr/local/bin/
 
 # Install bash and tools
 RUN apk update && \
-    apk add tar && \
+    apk add tar curl&& \
     tar -xvf /tmp/${HUGO_BINARY}.tar.gz -C /usr/local/bin && \
     chmod +x /usr/local/bin/selectelupload /usr/local/bin/hugo && \
     rm /tmp/${HUGO_BINARY}.tar.gz && \
